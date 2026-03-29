@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: finance-tracker-backend
+    runtime: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && gunicorn app:app
+    envVars:
+      - key: DATABASE_URL
+        sync: false
