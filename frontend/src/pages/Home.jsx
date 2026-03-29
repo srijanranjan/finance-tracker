@@ -19,6 +19,7 @@ function Home() {
     const [filterCategory, setFilterCategory] = useState("")
     const [filterType, setFilterType] = useState("")
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         fetchAll()
@@ -26,8 +27,11 @@ function Home() {
 
     const fetchAll = async () => {
         setLoading(true)
+        setError(null)
         try {
             await Promise.all([fetchTransactions(), fetchCategories()])
+        } catch (err) {
+            setError("Failed to load data. Please refresh the page.")
         } finally {
             setLoading(false)
         }
@@ -60,6 +64,7 @@ function Home() {
     }
 
     const handleDelete = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this transaction?")) return
         await deleteTransaction(id)
         fetchTransactions()
     }
@@ -74,6 +79,22 @@ function Home() {
                 <div className="flex flex-col items-center gap-3">
                     <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
                     <p className="text-gray-500 text-sm">Loading your finances...</p>
+                </div>
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-gray-100">
+                <div className="bg-white rounded-xl shadow-md p-8 text-center">
+                    <p className="text-red-500 text-lg font-medium">{error}</p>
+                    <button
+                        onClick={fetchAll}
+                        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm"
+                    >
+                        Try Again
+                    </button>
                 </div>
             </div>
         )

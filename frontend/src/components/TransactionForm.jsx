@@ -26,9 +26,25 @@ function TransactionForm({ onSubmit, onClose, editData, categories }) {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (isSubmitting) return
+
+        // Validation
+        if (!form.amount || form.amount <= 0) {
+            alert("Please enter a valid amount greater than 0")
+            return
+        }
+        if (!form.category_id) {
+            alert("Please select a category")
+            return
+        }
+        if (!form.date) {
+            alert("Please select a date")
+            return
+        }
+
         setIsSubmitting(true)
         try {
             await onSubmit(form)
