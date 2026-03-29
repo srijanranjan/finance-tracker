@@ -72,3 +72,21 @@ def delete_transaction(id):
     cur.close()
     conn.close()
     return jsonify({"message": "Transaction deleted"})
+
+# GET all categories
+@transactions_bp.route("/categories", methods=["GET"])
+def get_categories():
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, name, type FROM categories ORDER BY id")
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    categories = []
+    for row in rows:
+        categories.append({
+            "id": row[0],
+            "name": row[1],
+            "type": row[2]
+        })
+    return jsonify(categories)

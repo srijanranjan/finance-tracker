@@ -1,7 +1,11 @@
+import Navbar from "./components/Navbar"
+import Home from "./pages/Home"
+
 function App() {
   return (
-      <div className="bg-blue-500 text-white text-center p-10 text-2xl">
-        Tailwind is working!
+      <div className="min-h-screen bg-gray-100">
+        <Navbar />
+        <Home />
       </div>
   )
 }
