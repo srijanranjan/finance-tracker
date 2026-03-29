@@ -81,7 +81,7 @@ function Home() {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <Summary transactions={filtered} />
+            <Summary transactions={transactions} />
 
             {/* Filters */}
             <div className="px-6 pb-4 flex gap-4">
